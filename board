@@ -1,0 +1,57 @@
+# BubbleSort
+package jrJava.BubbleSort;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+
+import javax.swing.*;
+
+public class MyBoard extends JPanel implements MouseListener, MouseMotionListener{
+
+	private int x,y, lastX, lastY;
+	private JFrame frame;
+
+	public MyBoard(int w, int h){
+		frame = new JFrame();
+		frame.setSize(w,h);
+		frame.setVisible(true);
+		
+		frame.getContentPane().add(this);
+		
+		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
+	}
+	
+	public void paint(Graphics g){
+		g.setColor(Color.red);
+		g.drawLine(lastX, lastY, x, y);
+		lastX=x;
+		lastY=y;
+	}
+	
+	
+	
+	public void mouseDragged(MouseEvent e) {
+		x = e.getX();
+		y= e.getY();
+		repaint();
+	}
+	public void mouseMoved(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {}
+	public void mousePressed(MouseEvent e) {
+		lastX = e.getX();
+		lastY= e.getY();
+	}
+	public void mouseReleased(MouseEvent e) {}	
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
+	
+	public static void main(String[] args){
+		MyBoard board = new MyBoard(500,500);
+	
+	}
+
+}
