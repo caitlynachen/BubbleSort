@@ -1,0 +1,28 @@
+package jrJava.BubbleSort;
+
+public class MyTimer {
+
+	public void pause(int duration){
+		/*long startTime = System.currentTimeMillis();
+		long targetTime = startTime +duration;
+		while(true){
+			if(System.currentTimeMillis()>=targetTime){
+				return;
+			}
+		}
+		*/
+		 try{
+		Thread.currentThread().sleep(duration);
+		 }
+		 
+		 catch(InterruptedException ie){
+			 ie.printStackTrace();
+		 }
+		
+	}
+	
+	public static void main(String[] args){
+		MyTimer timer = new MyTimer();
+		timer.pause(5000);
+	}
+}
