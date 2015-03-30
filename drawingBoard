@@ -1,0 +1,45 @@
+package jrJava.BubbleSort;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
+import javax.swing.*;
+
+
+	public class MyDrawingBoard extends JPanel {
+
+		
+		private JFrame frame;
+		
+		private Image image;
+		private Graphics2D canvas;
+		private int w, h;
+
+		public MyDrawingBoard(int _w, int _h){
+			w = _w;
+			h = _h;
+			frame = new JFrame();
+			frame.setSize(w,h);
+			frame.setVisible(true);
+			
+			frame.getContentPane().add(this);
+			
+			image = new BufferedImage(w,h, BufferedImage.TYPE_INT_ARGB);
+			canvas = (Graphics2D) image.getGraphics();
+		}
+		
+		public Graphics2D getCanvas(){return canvas;}
+		
+		public void paint(Graphics g){
+			g.drawImage(image,0,0,this);
+		}
+		
+		public void clear(){
+			canvas.setColor(Color.white);
+			canvas.fillRect(0, 0, w, h);
+		}
+		
+		
+	
+	
+}
