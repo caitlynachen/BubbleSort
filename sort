@@ -1,0 +1,220 @@
+package jrJava.BubbleSort;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+public class Sort {
+
+	private static MyDrawingBoard board = new MyDrawingBoard(900,700);
+	private static MyTimer timer = new MyTimer();
+
+	private static int LEFT_MARGIN = 200;
+	private static int BASE_Y = 550;
+
+	public static void main(String[] args) {
+		int [] theNumbers = new int[] {81,15,22,5,12,35,67,90,48, 17}; //between 0 and 100
+
+		drawArray(theNumbers, Color.gray, 3, 4, Color.gray );
+
+		//BubbleSort(theNumbers);
+		//insertSort(theNumbers);
+		//DescendingBubbleSort(theNumbers);
+		//selectSort(theNumbers);
+		descendingInsertSort(theNumbers);
+		//descendingSelectSort(theNumbers);
+
+		drawArray(theNumbers, Color.gray, 3,4, Color.gray );
+
+	}
+
+	private static void insertSort(int [] numbers){
+
+		int temp;  
+
+
+		for(int i=1; i<numbers.length; i++){
+			temp = numbers[i];
+
+			drawArray(numbers, Color.gray, 0, i-1, Color.gray, i, -1, Color.gray);
+			drawArray(numbers, Color.gray, 0, i-1, Color.green, i, -1, Color.red);
+
+
+			for (int j=i-1; j>=0; j--){
+				if(numbers[j]>temp){
+					numbers[j+1] = numbers[j];
+					if(j==0){
+						numbers[0] = temp;
+					}
+				}
+				else{
+					numbers[j+1] = temp;
+					break;
+				}
+			}
+			drawArray(numbers, Color.gray, 0, i-1, Color.green, i, -1, Color.green);
+
+		}
+	}
+
+	private static void descendingInsertSort(int [] numbers){
+		int temp;  
+
+
+		for(int i=1; i<numbers.length; i++){
+			temp = numbers[i];
+
+			drawArray(numbers, Color.gray, 0, i-1, Color.gray, i, -1, Color.gray);
+			drawArray(numbers, Color.gray, 0, i-1, Color.green, i, -1, Color.red);
+
+
+			for (int j=i-1; j>=0; j--){
+				if(numbers[j]<temp){
+					numbers[j+1] = numbers[j];
+					if(j==0){
+						numbers[0] = temp;
+					}
+				}
+				else{
+					numbers[j+1] = temp;
+					break;
+				}
+			}
+			drawArray(numbers, Color.gray, 0, i-1, Color.green, i, -1, Color.green);
+
+		}
+
+	}
+
+	private static void DescendingBubbleSort(int[] numbers){
+
+
+
+		while(true){
+
+			boolean inOrder=true;
+
+			for(int i=0; i<numbers.length-1; i++){
+
+				drawArray(numbers, Color.gray, i,i+1, Color.gray );
+				drawArray(numbers, Color.gray, i, i+1, Color.darkGray );
+
+				if(numbers[i]<numbers[i+1]){
+					int temp = numbers[i];
+					numbers[i]=numbers[i+1];
+					numbers[i+1]=temp;
+					drawArray(numbers, Color.gray,i, i+1, Color.blue );
+					inOrder = false;
+				}
+			}
+			if(inOrder) break;
+		}
+	}
+
+
+	private static void BubbleSort(int[] numbers){
+
+
+
+		while(true){
+
+			boolean inOrder=true;
+
+			for(int i=0; i<numbers.length-1; i++){
+
+				drawArray(numbers, Color.gray, i,i+1, Color.gray );
+				drawArray(numbers, Color.gray, i, i+1, Color.darkGray );
+
+				if(numbers[i]>numbers[i+1]){
+					int temp = numbers[i];
+					numbers[i]=numbers[i+1];
+					numbers[i+1]=temp;
+					drawArray(numbers, Color.gray,i, i+1, Color.blue );
+					inOrder = false;
+				}
+			}
+			if(inOrder) break;
+		}
+	}
+
+	public static void drawArray(int[] numbers, Color color, int index1, int index2, Color highlight ){
+		board.clear();
+		Graphics2D canvas = board.getCanvas();
+
+		for(int i=0; i<numbers.length; i++){
+			canvas.setColor(color);
+			if(i==index1 || i==index2) canvas.setColor(highlight);
+
+			int x = 200+50*i;
+			int barHeight = numbers[i]*5;
+			canvas.fillRect(x, BASE_Y-barHeight, 40, barHeight);
+		}
+		board.repaint();
+		timer.pause(700);
+	}
+
+	private static void selectSort(int[] numbers){
+		for(int i=numbers.length-1; i>0; i--){
+
+			drawArray(numbers, Color.gray, 0, i, Color.gray, -1, -1, Color.gray);
+			drawArray(numbers, Color.gray, 0, i, Color.orange, -1, -1, Color.orange);
+
+			int maxIndex =0;
+			for(int j=1; j<=i; j++){
+				if(numbers[j] >numbers[maxIndex]){
+					maxIndex = j;
+
+				}
+			}
+			drawArray(numbers, Color.gray, 0, i, Color.orange, maxIndex, -1, Color.red);
+			int temp = numbers[i];
+			numbers[i]= numbers[maxIndex];
+			numbers[maxIndex] = temp;
+			drawArray(numbers, Color.gray, 0, i-1, Color.orange, i, -1, Color.red);
+
+		}
+	}
+
+	private static void descendingSelectSort(int[] numbers){
+		for(int i=1; i<=numbers.length-1; i++){
+
+			drawArray(numbers, Color.gray, 0, i, Color.gray, -1, -1, Color.gray);
+			drawArray(numbers, Color.gray, 0, i, Color.orange, -1, -1, Color.orange);
+
+			int maxIndex =0;
+			for(int j=i; j>=1; j--){
+				if(numbers[j] <numbers[maxIndex]){
+					maxIndex = j;
+
+				}
+			}
+			drawArray(numbers, Color.gray, 0, i, Color.orange, maxIndex, -1, Color.red);
+			int temp = numbers[i];
+			numbers[i]= numbers[maxIndex];
+			numbers[maxIndex] = temp;
+			drawArray(numbers, Color.gray, 0, i-1, Color.orange, i, -1, Color.red);
+
+		}
+	}
+
+
+
+	public static void drawArray(int[] numbers, Color color, int from, int to, Color groupColor, int index1, int index2, Color highlight ){
+		board.clear();
+		Graphics2D canvas = board.getCanvas();
+
+		for(int i=0; i<numbers.length; i++){
+			canvas.setColor(color);
+			if(i>=from && i<= to) canvas.setColor(groupColor);
+			if(i==index1 || i==index2) canvas.setColor(highlight);
+
+			int x = 200+50*i;
+			int barHeight = numbers[i]*5;
+			canvas.fillRect(x, BASE_Y-barHeight, 40, barHeight);
+		}
+		board.repaint();
+		timer.pause(700);
+	}
+
+
+
+}
